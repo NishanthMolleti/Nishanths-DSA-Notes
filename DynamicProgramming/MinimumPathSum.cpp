@@ -14,3 +14,21 @@ public:
         return solve(dp,grid,0,0,grid.size(),grid[0].size());
     }
 };
+//below is the Tabulation solution
+class SolutionTabulation {
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        vector<vector<int>> dp(grid.size(),vector<int>(grid[0].size(),0));
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){
+                int u=INT_MAX,l=INT_MAX;
+                if(i>0) u=dp[i-1][j];
+                if(j>0) l=dp[i][j-1];
+                if(i==0&&j==0)dp[i][j]=grid[i][j];
+                else
+                dp[i][j]=grid[i][j]+min(u,l);
+            }
+        }
+        return dp[grid.size()-1][grid[0].size()-1];
+    }
+};
